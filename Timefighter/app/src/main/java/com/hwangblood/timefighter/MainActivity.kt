@@ -2,12 +2,15 @@ package com.hwangblood.timefighter
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = MainActivity::class.java.simpleName
+
     private lateinit var gameScoreTextView: TextView
     private lateinit var timeLeftTextView: TextView
     private lateinit var tapMeButton: Button
@@ -16,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private var gameStarted = false
     private lateinit var countDownTimer: CountDownTimer
-    private val countDownTimeSeconds: Long = 10
+    private val countDownTimeSeconds: Long = 20
     private val initialCountDown: Long = (countDownTimeSeconds * 1000)
     private val countDownInterval: Long = 1000
     private var timeLeft = 0
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         tapMeButton.setOnClickListener { incrementScore() }
 
         resetGame()
+        Log.d(TAG, "onCreate called. Score is: $score")
     }
 
     private fun incrementScore() {
