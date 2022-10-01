@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private fun incrementScore() {
         // increment score logic
         score++
-        val newScore = "Your Score: $score"
+        val newScore = getString(R.string.your_score, score)
         gameScoreTextView.text = newScore
     }
 
