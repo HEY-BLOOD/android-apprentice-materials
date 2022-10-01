@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -15,10 +16,10 @@ class MainActivity : AppCompatActivity() {
 
     private var gameStarted = false
     private lateinit var countDownTimer: CountDownTimer
-    private val initialCountDown: Long = 60000
-    private val countDownTimeSeconds = initialCountDown / 1000
+    private val countDownTimeSeconds: Long = 10
+    private val initialCountDown: Long = (countDownTimeSeconds * 1000)
     private val countDownInterval: Long = 1000
-    private var timeLeft = 60
+    private var timeLeft = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 // To Be Implemented Later
+                endGame()
             }
         }
         gameStarted = false
@@ -77,5 +79,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun endGame() {
         // end game logic
+        Toast.makeText(
+            this, getString(R.string.game_over_message, score), Toast.LENGTH_LONG
+        ).show()
+        resetGame()
     }
 }
