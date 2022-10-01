@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun incrementScore() {
         // increment score logic
+        if (!gameStarted) {
+            startGame()
+        }
+
         score++
         val newScore = getString(R.string.your_score, score)
         gameScoreTextView.text = newScore
@@ -67,6 +71,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun startGame() {
         // start game logic
+        countDownTimer.start()
+        gameStarted = true
     }
 
     private fun endGame() {
