@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val SCORE_KEY = "SCORE_KEY"
+        private const val TIME_LEFT_KEY = "TIME_LEFT_KEY"
+    }
+
     private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var gameScoreTextView: TextView
@@ -36,6 +41,21 @@ class MainActivity : AppCompatActivity() {
 
         resetGame()
         Log.d(TAG, "onCreate called. Score is: $score")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(SCORE_KEY, score)
+        outState.putInt(TIME_LEFT_KEY, timeLeft)
+        countDownTimer.cancel()
+
+        Log.d(TAG, "onSaveInstanceState: Saving Score: $score & Time Left: $timeLeft")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy called.")
     }
 
     private fun incrementScore() {
