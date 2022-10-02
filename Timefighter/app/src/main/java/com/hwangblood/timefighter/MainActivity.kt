@@ -38,9 +38,38 @@ class MainActivity : AppCompatActivity() {
         timeLeftTextView = findViewById(R.id.time_left_text_view)
         tapMeButton = findViewById(R.id.tap_me_button)
         tapMeButton.setOnClickListener { incrementScore() }
-
-        resetGame()
+        if (savedInstanceState != null) {
+            score = savedInstanceState.getInt(SCORE_KEY)
+            timeLeft = savedInstanceState.getInt(TIME_LEFT_KEY)
+            restoreGame()
+        } else {
+            resetGame()
+        }
         Log.d(TAG, "onCreate called. Score is: $score")
+    }
+
+    private fun restoreGame() {
+        val restoredScore = getString(R.string.your_score, score)
+        gameScoreTextView.text = restoredScore
+        val restoredTime = getString(R.string.time_left, timeLeft)
+        timeLeftTextView.text = restoredTime
+        countDownTimer = object : CountDownTimer(
+            (timeLeft *
+                    1000).toLong(), countDownInterval
+        ) {
+            override fun onTick(millisUntilFinished: Long) {
+                timeLeft = millisUntilFinished.toInt() / 1000
+                val timeLeftString = getString(
+                    R.string.time_left,
+                    timeLeft
+                )
+                timeLeftTextView.text = timeLeftString
+            }
+
+            override fun onFinish() = endGame()
+        }
+        countDownTimer.start()
+        gameStarted = true
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -87,10 +116,7 @@ class MainActivity : AppCompatActivity() {
                 timeLeftTextView.text = timeLeftString
             }
 
-            override fun onFinish() {
-                // To Be Implemented Later
-                endGame()
-            }
+            override fun onFinish() = endGame()
         }
         gameStarted = false
     }
