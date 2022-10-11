@@ -25,14 +25,11 @@ class MainFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         binding.listsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-
-        // TODO: Create ListSelectionRecyclerViewAdapter
         binding.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter()
 
         return binding.root
