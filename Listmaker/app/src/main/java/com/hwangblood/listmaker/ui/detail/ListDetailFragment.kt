@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hwangblood.listmaker.databinding.FragmentListDetailBinding
 
 class ListDetailFragment : Fragment() {
@@ -27,6 +28,14 @@ class ListDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentListDetailBinding.inflate(inflater, container, false)
+
+        val recyclerAdapter = ListItemsRecyclerViewAdapter(viewModel.list)
+        binding.listItemsRecyclerview.adapter = recyclerAdapter
+        binding.listItemsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.onTaskAdded = {
+            recyclerAdapter.notifyDataSetChanged()
+        }
+
         return binding.root
     }
 
