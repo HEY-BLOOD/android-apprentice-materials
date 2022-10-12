@@ -6,5 +6,4 @@ import com.hwangblood.listmaker.databinding.ListSelectionViewHolderBinding
 class ListSelectionViewHolder(
     val binding: ListSelectionViewHolderBinding
 ) :
-    RecyclerView.ViewHolder(binding.root) {
-}
+    RecyclerView.ViewHolder(binding.root)
