@@ -1,7 +1,7 @@
 package com.hwangblood.listmaker.ui.detail
 
 import androidx.recyclerview.widget.RecyclerView
+import com.hwangblood.listmaker.databinding.ListItemViewHolderBinding
 
-// TODO Create list_itemview_holder.xml layout
-class ListItemViewHolder(private val binding: ListItemViewHolderBinding) :
+class ListItemViewHolder(binding: ListItemViewHolderBinding) :
     RecyclerView.ViewHolder(binding.root)
