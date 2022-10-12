@@ -35,8 +35,11 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         binding.listsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        binding.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter()
-
+        val recyclerViewAdapter = ListSelectionRecyclerViewAdapter(viewModel.lists)
+        binding.listsRecyclerview.adapter = recyclerViewAdapter
+        viewModel.onListAdded = {
+            recyclerViewAdapter.listsUpdated()
+        }
         return binding.root
     }
 }
