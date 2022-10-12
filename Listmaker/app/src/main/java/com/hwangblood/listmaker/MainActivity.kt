@@ -1,5 +1,6 @@
 package com.hwangblood.listmaker
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.hwangblood.listmaker.databinding.ActivityMainBinding
+import com.hwangblood.listmaker.ui.detail.ListDetailActivity
 import com.hwangblood.listmaker.ui.main.MainFragment
 import com.hwangblood.listmaker.ui.main.MainViewModel
 import com.hwangblood.listmaker.ui.main.MainViewModelFactory
@@ -52,5 +54,18 @@ class MainActivity : AppCompatActivity() {
             viewModel.saveList(TaskList(listTitleEditText.text.toString()))
         }
         builder.create().show()
+    }
+
+    private fun showListDetail(list: TaskList) {
+
+        val listDetailIntent = Intent(
+            this,
+            ListDetailActivity::class.java
+        )
+
+        // TODO Create INTENT_LIST_KEY String
+        listDetailIntent.putExtra(INTENT_LIST_KEY, list)
+
+        startActivity(listDetailIntent)
     }
 }
