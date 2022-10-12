@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hwangblood.listmaker.databinding.FragmentMainBinding
 
@@ -20,8 +21,12 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            MainViewModelFactory(
+                PreferenceManager.getDefaultSharedPreferences(requireActivity())
+            )
+        ).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -34,5 +39,4 @@ class MainFragment : Fragment() {
 
         return binding.root
     }
-
 }

@@ -5,22 +5,35 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.hwangblood.listmaker.databinding.ActivityMainBinding
 import com.hwangblood.listmaker.ui.main.MainFragment
+import com.hwangblood.listmaker.ui.main.MainViewModel
+import com.hwangblood.listmaker.ui.main.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
+
+        viewModel = ViewModelProvider(
+            this,
+            MainViewModelFactory(
+                PreferenceManager.getDefaultSharedPreferences(this)
+            )
+        ).get(MainViewModel::class.java)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+
         binding.floatingActionButton.setOnClickListener {
             showCreateListDialog()
         }
