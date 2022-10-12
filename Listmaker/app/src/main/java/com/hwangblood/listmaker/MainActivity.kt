@@ -1,10 +1,12 @@
 package com.hwangblood.listmaker
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -21,6 +23,19 @@ class MainActivity : AppCompatActivity(), MainFragment.MainFragmentInteractionLi
     companion object {
         const val INTENT_LIST_KEY = "list"
     }
+
+    // https://stackoverflow.com/questions/62671106/onactivityresult-method-is-deprecated-what-is-the-alternative
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                val data: Intent? = result.data
+                data?.let {
+                    viewModel.updateList(data.getParcelableExtra(INTENT_LIST_KEY)!!)
+                    viewModel.refreshLists()
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +80,8 @@ class MainActivity : AppCompatActivity(), MainFragment.MainFragmentInteractionLi
         val listDetailIntent = Intent(
             this, ListDetailActivity::class.java
         )
-
         listDetailIntent.putExtra(INTENT_LIST_KEY, list)
-
-        startActivity(listDetailIntent)
+        resultLauncher.launch(listDetailIntent)
     }
 
     override fun listItemTapped(list: TaskList) {

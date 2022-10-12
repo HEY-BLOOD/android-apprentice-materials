@@ -1,5 +1,7 @@
 package com.hwangblood.listmaker.ui.detail
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
@@ -8,16 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.hwangblood.listmaker.MainActivity
 import com.hwangblood.listmaker.R
-import com.hwangblood.listmaker.TaskList
 import com.hwangblood.listmaker.databinding.ActivityListDetailBinding
 
 class ListDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListDetailBinding
-    private lateinit var list: TaskList
 
     lateinit var viewModel: ListDetailViewModel
-    lateinit var fragment: ListDetailFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,5 +50,17 @@ class ListDetailActivity : AppCompatActivity() {
 
                 dialog.dismiss()
             }.create().show()
+    }
+
+    override fun onBackPressed() {
+        val bundle = Bundle()
+        bundle.putParcelable(
+            MainActivity.INTENT_LIST_KEY, viewModel.list
+        )
+        val intent = Intent()
+        intent.putExtras(bundle)
+        setResult(Activity.RESULT_OK, intent)
+
+        super.onBackPressed()
     }
 }
