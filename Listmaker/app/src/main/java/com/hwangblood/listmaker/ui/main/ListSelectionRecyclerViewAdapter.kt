@@ -19,7 +19,8 @@ class ListSelectionRecyclerViewAdapter : RecyclerView.Adapter<ListSelectionViewH
     }
 
     override fun onBindViewHolder(holder: ListSelectionViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.binding.itemNumber.text = (position + 1).toString()
+        holder.binding.itemString.text = listTitles[position]
     }
 
     override fun getItemCount(): Int = listTitles.size
