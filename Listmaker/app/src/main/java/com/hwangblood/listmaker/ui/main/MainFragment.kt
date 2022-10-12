@@ -8,22 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hwangblood.listmaker.TaskList
 import com.hwangblood.listmaker.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class MainFragment(
+    val clickListener: MainFragmentInteractionListener
+) : Fragment(), ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
     private lateinit var binding: FragmentMainBinding
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance(clickListener: MainFragmentInteractionListener) =
+            MainFragment(clickListener)
     }
 
     private lateinit var viewModel: MainViewModel
 
+    interface MainFragmentInteractionListener {
+        fun listItemTapped(list: TaskList)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(
-            requireActivity(),
-            MainViewModelFactory(
+            requireActivity(), MainViewModelFactory(
                 PreferenceManager.getDefaultSharedPreferences(requireActivity())
             )
         ).get(MainViewModel::class.java)
@@ -35,11 +42,15 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         binding.listsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        val recyclerViewAdapter = ListSelectionRecyclerViewAdapter(viewModel.lists)
+        val recyclerViewAdapter = ListSelectionRecyclerViewAdapter(viewModel.lists, this)
         binding.listsRecyclerview.adapter = recyclerViewAdapter
         viewModel.onListAdded = {
             recyclerViewAdapter.listsUpdated()
         }
         return binding.root
+    }
+
+    override fun listItemClicked(list: TaskList) {
+        clickListener.listItemTapped(list)
     }
 }
