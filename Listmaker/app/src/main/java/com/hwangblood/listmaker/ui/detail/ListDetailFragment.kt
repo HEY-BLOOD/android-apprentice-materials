@@ -14,12 +14,12 @@ class ListDetailFragment : Fragment() {
         fun newInstance() = ListDetailFragment()
     }
 
-    private lateinit var viewModel: ListDetaiViewModel
+    private lateinit var viewModel: ListDetailViewModel
     private lateinit var binding: FragmentListDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ListDetaiViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(ListDetailViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
