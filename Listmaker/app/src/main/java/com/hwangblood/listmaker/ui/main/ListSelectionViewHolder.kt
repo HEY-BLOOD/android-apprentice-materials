@@ -1,9 +1,9 @@
 package com.hwangblood.listmaker.ui.main
 
 import androidx.recyclerview.widget.RecyclerView
+import com.hwangblood.listmaker.databinding.ListSelectionViewHolderBinding
 
 class ListSelectionViewHolder(
-    // TODO Create ListSelectionViewHolder layout
     val binding: ListSelectionViewHolderBinding
 ) :
     RecyclerView.ViewHolder(binding.root) {
