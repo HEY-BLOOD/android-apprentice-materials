@@ -8,15 +8,18 @@ import android.text.InputType
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.hwangblood.listmaker.MainActivity
 import com.hwangblood.listmaker.R
 import com.hwangblood.listmaker.databinding.ActivityListDetailBinding
+import com.hwangblood.listmaker.ui.main.MainViewModel
+import com.hwangblood.listmaker.ui.main.MainViewModelFactory
 
 class ListDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListDetailBinding
 
-    lateinit var viewModel: ListDetailViewModel
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +30,12 @@ class ListDetailActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, ListDetailFragment.newInstance()).commitNow()
         }
-
-        viewModel = ViewModelProvider(this).get(ListDetailViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            MainViewModelFactory(
+                PreferenceManager.getDefaultSharedPreferences(this)
+            )
+        ).get(MainViewModel::class.java)
 
         viewModel.list = intent.getParcelableExtra(MainActivity.INTENT_LIST_KEY)!!
 

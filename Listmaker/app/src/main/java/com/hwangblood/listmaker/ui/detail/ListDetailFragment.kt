@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hwangblood.listmaker.MainActivity
 import com.hwangblood.listmaker.TaskList
 import com.hwangblood.listmaker.databinding.FragmentListDetailBinding
+import com.hwangblood.listmaker.ui.main.MainViewModel
+import com.hwangblood.listmaker.ui.main.MainViewModelFactory
 
 class ListDetailFragment : Fragment() {
 
@@ -17,12 +20,16 @@ class ListDetailFragment : Fragment() {
         fun newInstance() = ListDetailFragment()
     }
 
-    private lateinit var viewModel: ListDetailViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var binding: FragmentListDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ListDetailViewModel::class.java)
+        viewModel = ViewModelProvider(
+            requireActivity(), MainViewModelFactory(
+                PreferenceManager.getDefaultSharedPreferences(requireActivity())
+            )
+        ).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
@@ -45,7 +52,7 @@ class ListDetailFragment : Fragment() {
         binding.listItemsRecyclerview.adapter = recyclerAdapter
         binding.listItemsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         viewModel.onTaskAdded = {
-            recyclerAdapter.notifyDataSetChanged()
+            recyclerAdapter.notifyItemInserted(viewModel.list.tasks.size - 1)
         }
     }
 
