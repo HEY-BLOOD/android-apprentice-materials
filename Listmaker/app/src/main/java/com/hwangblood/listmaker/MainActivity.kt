@@ -8,6 +8,7 @@ import android.text.InputType
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.hwangblood.listmaker.databinding.ActivityMainBinding
@@ -49,8 +50,18 @@ class MainActivity : AppCompatActivity(), MainFragment.MainFragmentInteractionLi
         ).get(MainViewModel::class.java)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance(this)).commitNow()
+            val mainFragment = MainFragment.newInstance()
+            mainFragment.clickListener = this@MainActivity
+
+            val fragmentContainerViewId: Int = if (binding.mainFragmentContainer == null) {
+                R.id.container
+            } else {
+                R.id.main_fragment_container
+            }
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(fragmentContainerViewId, mainFragment)
+            }
         }
 
         binding.floatingActionButton.setOnClickListener {

@@ -12,16 +12,15 @@ import com.hwangblood.listmaker.TaskList
 import com.hwangblood.listmaker.databinding.FragmentMainBinding
 
 class MainFragment(
-    val clickListener: MainFragmentInteractionListener
+
 ) : Fragment(), ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
     private lateinit var binding: FragmentMainBinding
+    private lateinit var viewModel: MainViewModel
+    lateinit var clickListener: MainFragmentInteractionListener
 
     companion object {
-        fun newInstance(clickListener: MainFragmentInteractionListener) =
-            MainFragment(clickListener)
+        fun newInstance() = MainFragment()
     }
-
-    private lateinit var viewModel: MainViewModel
 
     interface MainFragmentInteractionListener {
         fun listItemTapped(list: TaskList)
