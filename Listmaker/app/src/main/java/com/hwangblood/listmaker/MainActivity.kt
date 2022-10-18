@@ -8,6 +8,7 @@ import android.text.InputType
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -66,6 +67,11 @@ class MainActivity : AppCompatActivity(), MainFragment.MainFragmentInteractionLi
             }
         }
 
+        binding.listDetailFragmentContainer?.setBackgroundColor(
+            ContextCompat.getColor(
+                baseContext, R.color.list_detail_background
+            )
+        )
         binding.floatingActionButton.setOnClickListener {
             showCreateListDialog()
         }

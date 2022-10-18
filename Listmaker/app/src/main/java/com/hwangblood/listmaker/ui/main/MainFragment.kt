@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hwangblood.listmaker.TaskList
 import com.hwangblood.listmaker.databinding.FragmentMainBinding
 
-class MainFragment(
-
-) : Fragment(), ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
+class MainFragment() : Fragment(),
+    ListSelectionRecyclerViewAdapter.ListSelectionRecyclerViewClickListener {
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
     lateinit var clickListener: MainFragmentInteractionListener
