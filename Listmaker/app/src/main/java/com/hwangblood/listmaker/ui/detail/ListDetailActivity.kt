@@ -31,6 +31,7 @@ class ListDetailActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(ListDetailViewModel::class.java)
 
         viewModel.list = intent.getParcelableExtra(MainActivity.INTENT_LIST_KEY)!!
+
         title = viewModel.list.name
 
         binding.addTaskButton.setOnClickListener {

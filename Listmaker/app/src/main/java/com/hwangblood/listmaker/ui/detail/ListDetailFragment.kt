@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hwangblood.listmaker.MainActivity
+import com.hwangblood.listmaker.TaskList
 import com.hwangblood.listmaker.databinding.FragmentListDetailBinding
 
 class ListDetailFragment : Fragment() {
@@ -28,6 +30,16 @@ class ListDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentListDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val list: TaskList? = arguments?.getParcelable(MainActivity.INTENT_LIST_KEY)
+        if (list != null) {
+            viewModel.list = list
+            requireActivity().title = list.name
+        }
 
         val recyclerAdapter = ListItemsRecyclerViewAdapter(viewModel.list)
         binding.listItemsRecyclerview.adapter = recyclerAdapter
@@ -35,8 +47,6 @@ class ListDetailFragment : Fragment() {
         viewModel.onTaskAdded = {
             recyclerAdapter.notifyDataSetChanged()
         }
-
-        return binding.root
     }
 
 }
