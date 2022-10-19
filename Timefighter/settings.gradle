@@ -14,5 +14,5 @@ dependencyResolutionManagement {
         maven { url 'https://maven.aliyun.com/repository/google' }
     }
 }
-rootProject.name = "Timefighter"
+rootProject.name = "TimeFighter"
 include ':app'
